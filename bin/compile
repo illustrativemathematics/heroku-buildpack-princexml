@@ -16,6 +16,12 @@ ENV_DIR=$3
 
 LICENSE=${BUILD_DIR}/${LICENSE_PATH}
 
+echo "******"
+echo $LICENSE
+echo "******"
+echo $LICENSE_PATH
+echo "******"
+
 if [ -f ${LICENSE} ]; then
   echo "       Configuring license file"
   echo "       Adding license at ${LICENSE_PATH} to prince"
