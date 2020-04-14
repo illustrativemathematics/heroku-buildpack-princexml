@@ -15,7 +15,7 @@ if [ -f ${LICENSE} ]; then
   echo "       Adding license to prince"
   cp ${LICENSE} ./.downloads/prince-$PRINCE_VERSION-linux-generic-x86_64/lib/prince/license/license.dat
 else
-  echo "       No license found"
+  echo "       No license found: $LICENSE"
 fi
 
 echo $1 | ./.downloads/prince-$PRINCE_VERSION-linux-generic-x86_64/install.sh
