@@ -1,19 +1,23 @@
 #!/bin/bash
 
-PRINCE_VERSION="13.5"
-echo "-----> Installing PrinceXML $PRINCE_VERSION"
+# https://devcenter.heroku.com/articles/buildpack-api#bin-compile
+ENV_DIR=$3
+
+PRINCE_LICENSE_FILE=${ENV_DIR}/PRINCE_LICENSE
+PRINCE_VERSION_FILE=${ENV_DIR}/PRINCE_VERSION
+
+PRINCE_VERSION=$(cat "$PRINCE_VERSION_FILE")
+
+echo "-----> Installing PrinceXML version: $PRINCE_VERSION"
 [ -d .downloads ] || mkdir .downloads
 (cd .downloads; [ -d "prince-$PRINCE_VERSION-linux-amd64-static" ] ||
   curl -s https://www.princexml.com/download/prince-$PRINCE_VERSION-linux-generic-x86_64.tar.gz | tar xzf -)
 
-# https://devcenter.heroku.com/articles/buildpack-api#bin-compile
-ENV_DIR=$3
-LICENSE=${ENV_DIR}/PRINCE_LICENSE
 
-if [ -f ${LICENSE} ]; then
+if [ -f ${PRINCE_LICENSE_FILE} ]; then
   echo "       Configuring license file"
   echo "       Adding license to prince"
-  cp ${LICENSE} ./.downloads/prince-$PRINCE_VERSION-linux-generic-x86_64/lib/prince/license/license.dat
+  cp ${PRINCE_LICENSE_FILE} ./.downloads/prince-$PRINCE_VERSION-linux-generic-x86_64/lib/prince/license/license.dat
 else
   echo "       No license found: $LICENSE"
 fi
